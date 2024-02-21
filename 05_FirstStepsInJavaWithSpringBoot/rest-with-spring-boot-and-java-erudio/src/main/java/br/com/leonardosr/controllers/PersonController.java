@@ -3,7 +3,6 @@ package br.com.leonardosr.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.leonardosr.data.vo.v1.PersonVO;
 import br.com.leonardosr.services.PersonServices;
+import br.com.leonardosr.util.MediaType;
 
 @RestController
 @RequestMapping("/person/v1")
@@ -24,24 +24,28 @@ public class PersonController {
 	@Autowired
 	private PersonServices service;
 	
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{id}", 
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML })
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML })
 	public List<PersonVO> findAll() {
 		return service.findAll();
 	}
 	
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(
+			consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML },
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML })
 	public PersonVO create(@RequestBody PersonVO PersonVO) {
 		return service.create(PersonVO);
 	}
 	
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(
+			consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML },
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YAML })
 	public PersonVO update(@RequestBody PersonVO PersonVO) {
 		return service.update(PersonVO);
 	}
